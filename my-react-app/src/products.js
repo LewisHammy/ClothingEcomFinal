@@ -1,4 +1,4 @@
-import CAT from './assets/freshouttauci.png';
+import CAT from './assets/products/freshouttauci.png';
 
 export const PRODUCTS = [
     {
@@ -7,4 +7,5 @@ export const PRODUCTS = [
         price: 35,
         productImage: CAT
     },
-]
+];
+
