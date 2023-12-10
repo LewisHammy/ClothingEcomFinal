@@ -1,22 +1,36 @@
-const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
-const productSchema = new mongoose.Schema({
+const productSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  description: String,
+  description: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
   },
-  category: String,
-  size: [String],
-  color: String,
-  imageUrls: [String],
+  category: {
+    type: String,
+    required: true,
+  },
+  size: [{
+    type: String,
+  }],
+  color: {
+    type: String,
+    required: true,
+  },
+  imageUrls: [{
+    type: String,
+  }],
   // Add more fields as needed for your application
+
+  // You can add more fields here specific to the product schema
 });
 
-const Product = mongoose.model('Product', productSchema);
 
-module.exports = Product;
+module.exports = productSchema;
