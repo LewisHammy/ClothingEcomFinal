@@ -2,9 +2,9 @@ const router = require('express').Router();
 const {
   createUser,
   getSingleUser,
-  saveClothingItem,
-  deleteClothingItem,
   login,
+  saveProductToCart,
+  removeProductFromCart,
 } = require('../../controllers/user-controller');
 
 // Import middleware
@@ -17,8 +17,8 @@ router.route('/login').post(login);
 
 router.route('/me').get(authMiddleware, getSingleUser);
 
-router.route('/cart/:clothingId').put(authMiddleware, saveClothingItem);
+router.post('/save-product', saveProductToCart);
 
-router.route('/cart/:clothingId').delete(authMiddleware, deleteClothingItem);
+router.delete('/remove-product/:productId', removeProductFromCart);
 
 module.exports = router;
