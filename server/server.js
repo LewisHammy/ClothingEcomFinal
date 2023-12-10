@@ -1,21 +1,23 @@
 const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
+const path = require('path');
+const { ApolloServer } = require('@apollo/server');
+const { expressMiddleware } = require('@apollo/server/express4');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
-const PORT = process.env.PORT || 5000;
-const app = express();
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
+const PORT = process.env.PORT || 5000; // Adjust the port number as needed
 const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
 
+const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 server.start().then(() => {
-  server.applyMiddleware({ app, path: '/graphql' });
+  app.use('/graphql', expressMiddleware(server));
 
   db.once('open', () => {
     app.listen(PORT, () => {
