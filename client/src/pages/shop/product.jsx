@@ -7,11 +7,20 @@ export const Product = (props) => {
   const [productInfo, setProductInfo] = useState(null);
 
   useEffect(() => {
-    // Replace 'your-api-endpoint' with the actual endpoint URL
-    fetch(`your-api-endpoint/products/${id}`)
-      .then((response) => response.json())
-      .then((data) => setProductInfo(data))
-      .catch((error) => console.error("Error fetching product:", error));
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`/api/product/${id}`);
+        if (!response.ok) {
+          throw new Error('Error fetching product');
+        }
+        const data = await response.json();
+        setProductInfo(data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
   const cartItemCount = cartItems[id];

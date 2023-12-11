@@ -14,7 +14,6 @@ const productSchema = new mongoose.Schema({
   size: [String],
   color: String,
   imageUrls: [String],
-  // Add more fields as needed for your application
 });
 
 const Product = mongoose.model('Product', productSchema);
