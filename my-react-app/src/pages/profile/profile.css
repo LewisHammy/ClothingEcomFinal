@@ -1,0 +1,44 @@
+.update-btn {
+  float: right;
+  color: white;
+};
+
+.settings-tab {
+  float: right;
+  padding: 5px 15px 5px 0px;
+};
+
+
+.setting-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 40vw;
+  height: 40vh;
+  margin: auto;
+};
+
+
+
+
+/* .update-button:hover {
+  background-color: #45a049;
+  color: white;
+}; */
+
+/* .close-button {
+  height: 20px;
+  width: 20px;
+  background-color: wheat;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+}; */

@@ -3,7 +3,14 @@ import { PRODUCTS } from "../../products";
 import { Product } from "./product";
 import "./shop.css";
 
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCTS } from "../../utils/queries";
+
 export const Shop = () => {
+
+  const { loading, error, data } = useQuery(QUERY_PRODUCTS);
+  const products = data?.products || [];
+
   return (
     <div className="shop">
       <div className="shopTitle">
@@ -11,9 +18,14 @@ export const Shop = () => {
       </div>
 
       <div className="products">
-        {PRODUCTS.map((product) => (
-          <Product data={product} />
-        ))}
+
+        {loading ? (
+          <div>Loading...</div>
+        ): (<Product products={products} />)}
+        {/* {PRODUCTS.map((product) => (
+          <Product key={product.id} id={product.id} data={product} />
+        ))} */}
+
       </div>
     </div>
   );

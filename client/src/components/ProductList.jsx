@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const ProductList = () => {
   const [products, setProducts] = useState([]);
 
+  //use querry
   useEffect(() => {
     async function fetchProducts() {
       try {
