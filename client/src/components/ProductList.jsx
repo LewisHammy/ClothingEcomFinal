@@ -27,7 +27,7 @@ const ProductList = () => {
             <p>Description: {product.description}</p>
             <p>Price: {product.price}</p>
             <p>Category: {product.category}</p>
-            {/* Add more fields as needed */}
+            <img src={product.imageUrls} alt={product.name} />
           </div>
         ))}
       </div>

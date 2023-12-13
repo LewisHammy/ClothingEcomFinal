@@ -5,7 +5,7 @@ module.exports = {
   async getSingleUser({ user = null, params }, res) {
     try {
       const foundUser = await User.findOne({
-        $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
+        _id: user ? user._id : params.id,
       });
 
       if (!foundUser) {
@@ -37,7 +37,7 @@ module.exports = {
 
   async login({ body }, res) {
     try {
-      const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+      const user = await User.findOne({ email: body.email });
 
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -86,5 +86,4 @@ module.exports = {
       res.status(500).json({ message: 'Server error' });
     }
   },
-
 };
