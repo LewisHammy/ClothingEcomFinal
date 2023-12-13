@@ -21,9 +21,7 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/hello', (req, res) => {
-  res.send('Hello, this is a custom route!');
-});
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Mount the product routes
 app.use('/api/products', productRoutes);
