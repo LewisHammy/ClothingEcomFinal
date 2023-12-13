@@ -1,6 +1,8 @@
 import "./profile.css";
 import React, { useState } from "react";
 import ProductList from "../../components/ProductList";
+import { setContext } from "@apollo/client/link/context";
+import Auth from "../../utils/auth";
 
 export function Profile() {
 
@@ -9,6 +11,7 @@ export function Profile() {
 
   return (
     <div>
+      {Auth.loggedIn() ? (<><p>Hi Logged in!</p></>) : (<><p>Logged Out!</p></>)}
       <section className="settings-tab">
         <button onClick={() => setIsBoxOpen(!isBoxOpen)}>
           Settings
@@ -21,6 +24,8 @@ export function Profile() {
         <img src="https://via.placeholder.com/150" alt="User Avatar" />
         <ProductList />
         <p>Username: </p>
+        <button onClick={() => Auth.login(121212)}>Login</button>
+        <button onClick={() => Auth.logout()}>Logout</button>
         <p>password:</p>
         <p>email:</p>
         {/* User Information */}
