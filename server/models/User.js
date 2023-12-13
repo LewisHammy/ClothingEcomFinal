@@ -1,15 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const Product = require('./Product'); // Import the Product model
-
 const userSchema = new Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     email: {
       type: String,
       required: true,
@@ -20,14 +13,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // Define savedProducts as an array of references to the Product model
-    savedProducts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-      },
-    ],
-    // Other user-related fields as needed for your application
   },
   {
     // Set additional options if required
@@ -50,11 +35,6 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
-
-// Virtual field to get the count of saved products
-userSchema.virtual('productCount').get(function () {
-  return this.savedProducts.length;
-});
 
 const User = model('User', userSchema);
 

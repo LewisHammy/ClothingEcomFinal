@@ -5,6 +5,7 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 const productRoutes = require('./routes/api/product-routes'); // Adjust the path accordingly
+const userRoutes = require('./routes/api/user-routes');
 const cors = require('cors');
 
 
@@ -27,6 +28,7 @@ app.get('/hello', (req, res) => {
 
 // Mount the product routes
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes); // Mount user routes
 
 // Start the Apollo Server
 server.start().then(() => {
