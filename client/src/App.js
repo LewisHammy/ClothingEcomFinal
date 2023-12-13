@@ -5,26 +5,47 @@ import { Shop } from "./pages/shop/shop";
 import { Contact } from "./pages/contact";
 import { Cart } from "./pages/cart/cart";
 import { Login } from "./pages/login/login";
+import { Signup } from "./pages/signup/signup";
 import { ShopContextProvider } from "./context/shop-context";
 import ProductList from './components/ProductList';
+import { Profile } from './pages/profile/profile';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <ShopContextProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Shop />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/products/:id" element={<ProductList />} />
-            <Route path="/products" element={<ProductList />} />
-          </Routes>
-        </Router>
-      </ShopContextProvider>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <ShopContextProvider>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Shop />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/products" element={<ProductList />} />
+            </Routes>
+          </Router>
+        </ShopContextProvider>
+      </div>
+    </ApolloProvider>
   );
 }
 
