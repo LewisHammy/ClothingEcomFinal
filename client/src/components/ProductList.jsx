@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await fetch('http://localhost:5000/api/products'); // Replace '/api/products' with your actual API endpoint
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+  const GET_PRODUCTS = gql`
+    query {
+      products {
+        _id
+        name
+        description
+        price
+        category
+        imageUrls
       }
     }
+  `;
 
-    fetchProducts();
-  }, []);
+  const { loading, error, data } = useQuery(GET_PRODUCTS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const products = data.products;
 
   return (
     <div>
@@ -27,7 +32,10 @@ const ProductList = () => {
             <p>Description: {product.description}</p>
             <p>Price: {product.price}</p>
             <p>Category: {product.category}</p>
-            <img src={product.imageUrls} alt={product.name} />
+            {product.imageUrls.map((url, index) => (
+              <img key={index} src={url} alt={`Product ${index}`} />
+            ))}
+            {/* Render other product details as needed */}
           </div>
         ))}
       </div>
