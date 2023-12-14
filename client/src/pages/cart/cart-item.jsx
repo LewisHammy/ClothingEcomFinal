@@ -18,8 +18,9 @@ export const CartItem = (props) => {
   };
 
   const handleRemoveClick = () => {
-    console.log("Removing item with ID:", _id);
-    removeFromCart(_id);
+    if (quantity > 0) {
+      updateCartItemCount(quantity - 1, _id);
+    }
   };
 
   if (quantity === 0) {
@@ -47,3 +48,5 @@ export const CartItem = (props) => {
     </div>
   );
 };
+
+export default CartItem;
