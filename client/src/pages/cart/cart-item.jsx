@@ -7,6 +7,25 @@ export const CartItem = (props) => {
 
   const quantity = cartItems[_id] || 0;
 
+  const handleInputChange = (e) => {
+    const newAmount = Number(e.target.value);
+
+    if (newAmount >= 0) {
+      updateCartItemCount(newAmount, _id);
+    } else {
+      // Optionally handle negative values or other validations
+    }
+  };
+
+  const handleRemoveClick = () => {
+    console.log("Removing item with ID:", _id);
+    removeFromCart(_id);
+  };
+
+  if (quantity === 0) {
+    return null; // Do not render anything if the quantity is 0
+  }
+
   return (
     <div className="cartItem">
       <img src={imageUrls[0]} alt={name} />
@@ -15,15 +34,15 @@ export const CartItem = (props) => {
           <b>{name}</b>
         </p>
         <p> Price: ${price}</p>
-        <div className="countHandler">
-          <button onClick={() => removeFromCart(_id)}> - </button>
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => updateCartItemCount(Number(e.target.value), _id)}
-          />
-          <button onClick={() => addToCart(_id)}> + </button>
-        </div>
+      </div>
+      <div className="countHandler">
+        <button onClick={handleRemoveClick}> - </button>
+        <input
+          type="number"
+          value={quantity}
+          onChange={handleInputChange}
+        />
+        <button onClick={() => addToCart(_id)}> + </button>
       </div>
     </div>
   );
