@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/navbar";
 import { Shop } from "./pages/shop/shop";
-import { Contact } from "./pages/contact";
+import { About } from "./components/About";
 import { Cart } from "./pages/cart/cart";
 import { ShopContextProvider } from "./context/shop-context";
 import ProductList from './components/ProductList';
@@ -17,7 +17,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Shop />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/About" element={<About />} />
             <Route path="/cart" element={<Cart />} />
             {/* Update the routes for login and signup */}
             <Route path="/login" element={<Login />} />
