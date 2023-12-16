@@ -6,56 +6,36 @@ import quantumThreadsImage from '../../assets/logo/QuantumThreads-logos_black.pn
 import './login.css';
 
 const Login = () => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
-  const [loginUser] = useMutation(LOGIN_USER, {
-    onError: (error) => {
-      setError('Invalid credentials'); // Display a generic error message for security reasons
-      console.error('Error logging in:', error);
-    },
-    onCompleted: (data) => {
-      if (data && data.login && data.login.token) {
-        Auth.login(data.login.token);
-        console.log('Login successful!');
-        // Redirect or handle successful login here
-      } else {
-        setError('Invalid credentials');
-      }
-    },
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  //created link to login user mutation
+  const [loginUser] = useMutation(LOGIN_USER);
+  
   const handleLogin = async (event) => {
     event.preventDefault();
-
+    
     try {
-      const { data } = await loginUser({
-        variables: { ...formState },
-      });
 
-      if (data && data.login && data.login.token) {
-        Auth.login(data.login.token);
+      const { data } = await loginUser({
+        variables: { email, password }});
+        console.log('User logged in successfully:', data);
+
+      // check if the token is received in the response from the loginUser mutation
+      if (data && data.loginUser && data.loginUser.token) {
+        console.log(data)
+        Auth.login(data.loginUser.token);
         console.log('Login successful!');
+
         // Redirect or handle successful login here
       } else {
-        setError('Invalid credentials');
+        setError('Invalid credentials with data');
       }
     } catch (error) {
-      setError('Something went wrong');
       console.error('Error logging in:', error);
+      setError('Something went wrong logging in');
     }
-
-    // Clear form values after submission
-    setFormState({ email: '', password: '' });
   };
 
   return (
@@ -68,8 +48,8 @@ const Login = () => {
           <input
             type="text"
             name="email"
-            value={formState.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="login-input"
           />
         </div>
@@ -78,12 +58,12 @@ const Login = () => {
           <input
             type="password"
             name="password"
-            value={formState.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="login-input"
           />
         </div>
-        <button type="submit" className="login-button">
+        <button onClick={handleLogin} className="login-button">
           Login
         </button>
         {error && <p className="error-message">{error}</p>}

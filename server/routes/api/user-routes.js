@@ -13,6 +13,7 @@ const { authMiddleware } = require('../../utils/auth');
 // Routes for the clothing ecommerce app
 router.route('/').post(createUser);
 
+//compare login credentials to the database
 router.route('/login').post(login);
 
 router.route('/me').get(authMiddleware, getSingleUser);

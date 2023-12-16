@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
+const bcrypt = require('bcrypt');
 
 module.exports = {
   async getSingleUser({ user = null, params }, res) {
@@ -22,7 +23,12 @@ module.exports = {
   async createUser({ body }, res) {
     try {
       const { email, username, password } = body; // Extracting email, username, password
-      const user = await User.create({ email, username, password });
+
+        //hash password before saving
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      const user = await User.create({ email, username, password: hashedPassword });
 
       if (!user) {
         return res.status(400).json({ message: 'Failed to create user' });
@@ -40,15 +46,17 @@ module.exports = {
     try {
       const { email, password } = body; // Extracting email and password
       const user = await User.findOne({ email });
+      console.log(user);
 
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      const correctPw = await user.isCorrectPassword(password);
+      // Compare the plaintext password with the hashed password
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      if (!correctPw) {
-        return res.status(401).json({ message: 'Invalid credentials' });
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Invalid credentials during compare' });
       }
 
       const token = signToken(user);
@@ -88,6 +96,6 @@ module.exports = {
       res.status(500).json({ message: 'Server error' });
     }
   },
-  
+
   // Add more controller functions as needed
 };

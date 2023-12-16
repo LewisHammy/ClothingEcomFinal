@@ -9,7 +9,10 @@ import ProductList from './components/ProductList';
 import SignUp from "./pages/signup/signup";
 import Login from "./pages/login/login";
 
+
 function App() {
+
+
   return (
     <div className="App">
       <ShopContextProvider>
@@ -19,7 +22,6 @@ function App() {
             <Route path="/" element={<Shop />} />
             <Route path="/About" element={<About />} />
             <Route path="/cart" element={<Cart />} />
-            {/* Update the routes for login and signup */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/products/:id" element={<ProductList />} />
