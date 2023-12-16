@@ -32,7 +32,7 @@ export const SignUp = () => {
 
   return (
     <div className="signup-container">
-      <h2>Sign Up take 2</h2>
+      <h2>Sign Up</h2>
       <img src={quantumThreadsImage} alt="Quantum Threads" className="signup-image" />
       <form onSubmit={handleSignUp}>
       <div>
