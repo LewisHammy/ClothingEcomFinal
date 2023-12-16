@@ -27,6 +27,7 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
+  // Set token to localStorage and reload page to homepage
   login(idToken) {
     localStorage.setItem('id_token', idToken);
     window.location.assign('/');

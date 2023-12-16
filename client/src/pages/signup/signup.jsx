@@ -25,15 +25,16 @@ export const SignUp = () => {
       // Optionally, handle any additional logic after signup
 
     } catch (error) {
-      setError('Something went wrong');
+      setError('Something went wrong signing up');
       console.error('Error while creating user:', error.message);
     }
   };
 
   return (
     <div className="signup-container">
-      <h2>Sign Up</h2>
+      <h2>Sign Up take 2</h2>
       <img src={quantumThreadsImage} alt="Quantum Threads" className="signup-image" />
+      <form onSubmit={handleSignUp}>
       <div>
         <label>Email</label>
         <input
@@ -61,10 +62,11 @@ export const SignUp = () => {
           className="signup-input"
         />
       </div>
+      </form>
       <button onClick={handleSignUp} className="signup-button">
         Sign Up
       </button>
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error-message">CRUD{error}</p>}
     </div>
   );
 };
